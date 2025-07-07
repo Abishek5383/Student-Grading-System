@@ -1,0 +1,79 @@
+import java.util.*;
+
+class Student {
+    String name;
+    int rollNumber;
+    double[] marks;
+    double average;
+    String grade;
+
+    Student(String name, int rollNumber, double[] marks) {
+        this.name = name;
+        this.rollNumber = rollNumber;
+        this.marks = marks;
+        calculateAverage();
+        assignGrade();
+    }
+
+    void calculateAverage() {
+        double sum = 0;
+        for (double mark : marks) {
+            sum += mark;
+        }
+        average = sum / marks.length;
+    }
+
+    void assignGrade() {
+        if (average >= 90) grade = "A+";
+        else if (average >= 80) grade = "A";
+        else if (average >= 70) grade = "B";
+        else if (average >= 60) grade = "C";
+        else if (average >= 50) grade = "D";
+        else grade = "F";
+    }
+
+    void display() {
+        System.out.println("\nStudent Name: " + name);
+        System.out.println("Roll Number: " + rollNumber);
+        System.out.printf("Average Marks: %.2f\n", average);
+        System.out.println("Grade: " + grade);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        List<Student> students = new ArrayList<>();
+
+        System.out.print("Enter number of students: ");
+        int n = sc.nextInt();
+        sc.nextLine();
+
+        for (int i = 0; i < n; i++) {
+            System.out.println("\nEnter details for student " + (i + 1));
+            System.out.print("Name: ");
+            String name = sc.nextLine();
+            System.out.print("Roll Number: ");
+            int roll = sc.nextInt();
+
+            System.out.print("Enter number of subjects: ");
+            int subjects = sc.nextInt();
+            double[] marks = new double[subjects];
+
+            for (int j = 0; j < subjects; j++) {
+                System.out.print("Enter marks for subject " + (j + 1) + ": ");
+                marks[j] = sc.nextDouble();
+            }
+            sc.nextLine(); // consume newline
+
+            students.add(new Student(name, roll, marks));
+        }
+
+        System.out.println("\n---- Student Results ----");
+        for (Student s : students) {
+            s.display();
+        }
+
+        sc.close();
+    }
+}
